@@ -1,0 +1,189 @@
+#menu-nav { background-color: red !important }
+.menuContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+main {
+    background-color: #f0e9e2;
+    background-image: url("../../../public/images/Icons/Orange_Background.png");
+    background-repeat: repeat;
+    background-size: 200px;
+    align-items: center;
+    justify-content: center;
+    animation: backgroundScroll 40s linear infinite;
+}
+@keyframes backgroundScroll {
+    to {
+        background-position: 2000px;
+    }
+}
+.container_menu {
+    background-color: white;
+    display: flex;
+    margin-inline: auto;
+}
+.main-content {
+    position: relative;
+    width: 75%;
+    height: 80vh;
+    padding: 0;
+    height: 100%;
+    overflow: auto;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+#itemContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows:auto;
+    gap: 32px;
+    padding-inline: 15px;
+}
+@media all and (max-width: 1200px) {
+    .container_menu {
+        display: block !important;
+    }
+    .main-content {
+        width: 100% !important;
+    }
+    #itemContainer {
+        margin-top: -15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.container_menu {
+    max-width: 2000px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+}
+.item {
+    text-wrap: wrap;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 460px;
+}
+.item img {
+    background-color: rgba(0, 0, 0, 0);
+    width: 192px;
+    height: 192px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.5));
+    border-radius: 10px;
+}
+.item .name {
+    margin-top: 16px;
+    font-size: 18px;
+    color: rgb(67, 44, 26);
+    font-weight: 800;
+    font-size: 25px;
+}
+.item .price {
+    color: rgb(67, 44, 26);
+    font-size: 23px;
+    font-weight: 450;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 100px;
+}
+.item .itemButton {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    position: absolute;
+    right: 13%;
+    left: 13%;
+    bottom: 30px;
+    margin: 0 auto;
+    font-weight: 800;
+    font-size: 18px;
+    color: white;
+    border: #f9a833ff solid 3px;
+    background-color: #f9a833ff;
+}
+.item .itemButton:hover {
+    color: #f9a833ff;
+    background-color: white;
+}
+.item .deleteButton {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    filter: none;
+    cursor: pointer;
+    border: none;
+    background-image: url("../images/Icons/CloseMoreIcon.png");
+    background-position: center;
+    background-size: cover;
+}
+#addNewButton {
+    z-index: 999;
+    position: absolute;
+    border-radius: 50%;
+    border: rgb(255, 102, 0) solid 5px;
+    width: 100px;
+    height: 100px;
+    bottom: 50px;
+    right: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition:
+        transform 0.12s ease-in-out;
+}
+#addNewButton:hover {
+    z-index: 999;
+    transform: scale(1.2);
+}
+@media all and (min-width: 1400px) {
+    #itemContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media all and (max-width: 1400px) {
+    footer {
+        display: none !important;
+    }
+    .main-content {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .item {
+        width: 300px;
+    }
+    .item .name {
+        font-size: 20px;
+    }
+    #addNewButton {
+        transform: scale(0.8);
+        bottom: 20px;
+        right: 10px;
+    }
+    #addNewButton:hover {
+        transform: scale(1);
+    }
+}
+@media all and (max-width: 1400px) {
+    .container_menu {
+        position: static;
+    }
+}

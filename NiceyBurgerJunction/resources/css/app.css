@@ -1,0 +1,22 @@
+*, body { margin: 0; padding: 0; }
+body { background-color: white; }
+main { background-color: white; }
+button { cursor: pointer; }
+
+/* REMOVE UNNECESSARY BROWSER FEATURES */
+input::-ms-reveal,
+input::-ms-clear,
+input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+}
+
+@media all and (max-width: 1400px) {
+    * {
+        -ms-overflow-style: none !important;
+        scrollbar-width: none !important;
+    }
+    *::-webkit-scrollbar {
+        display: none !important;
+    }
+}

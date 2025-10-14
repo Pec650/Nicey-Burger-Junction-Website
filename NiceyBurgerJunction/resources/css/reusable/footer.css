@@ -1,0 +1,112 @@
+body {
+    background-color: #f9a833ff;
+}
+footer {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9a833ff;
+    width: 100%;
+    box-shadow: 0 -40px 60px -1px rgba(71, 44, 75, 0.17);
+}
+footer h3, footer p, footer a {
+    color: white;
+}
+footer hr {
+    background-color: white;
+    height: 3px;
+    border: none;
+}
+footer h3, footer nav a {
+    font-weight: 800;
+}
+footer p {
+    font-size: 20px;
+    font-weight: 500;
+}
+#footerContainer {
+    display: flex;
+    justify-content: center;
+    padding: 100px 50px;
+}
+.footerContainer {
+    display: flex;
+    width: 1200px;
+    flex-wrap: wrap;
+}
+.footerContainer .blockContainer {
+    display: block;
+}
+.footerContainer .blockContainer nav {
+    display: block;
+}
+.footerContainer .blockContainer nav a {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    text-decoration: none;
+}
+.footerContainer .blockContainer nav a:hover {
+    color: red;
+}
+.footerContainer .blockContainer div img {
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    filter:brightness(0) invert(1);
+}
+.footerContainer .blockContainer div img:hover {
+    filter:brightness(1);
+}
+#companyFooter img {
+    height: 150px;
+    margin-left: -20px;
+}
+#aboutSection {
+    margin-left: 80px;
+}
+#aboutSection .socialMedias-icons {
+    width: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-left: -20px;
+}
+#aboutSection .socialMedias-icons img {
+    height: 50px;
+    width: 50px;
+}
+#quickSites {
+    margin-left: 140px;
+}
+#copyrightSection {
+    width: 1200px;
+    margin-bottom: 50px;
+}
+@media all and (max-width: 1400px) {
+    #footerContainer {
+        padding-bottom: 10px;
+    }
+    .footerContainer {
+        display: block;
+        padding: 50px 10px;
+    }
+    #companyFooter {
+        margin-top: -40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    #aboutSection {
+        margin-top: 40px;
+        margin-left: 0px;
+        text-align: center;
+    }
+    #aboutSection .socialMedias-icons {
+        margin-inline: auto;
+    }
+    #quickSites {
+        margin-top: 60px;
+        text-align: center;
+        margin-left: 0;
+    }
+    #copyrightSection {
+        width: 100%;
+    }
+}
