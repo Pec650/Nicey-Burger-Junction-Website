@@ -2,6 +2,7 @@ body {
     background-color: #f9a833ff;
 }
 footer {
+    z-index: 10;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f9a833ff;
     width: 100%;
@@ -81,6 +82,7 @@ footer p {
 }
 @media all and (max-width: 1400px) {
     #footerContainer {
+        padding-top: 50px;
         padding-bottom: 10px;
     }
     .footerContainer {
@@ -93,10 +95,16 @@ footer p {
         display: flex;
         justify-content: center;
     }
+    #companyFooter img {
+        height: 120px;
+    }
     #aboutSection {
         margin-top: 40px;
         margin-left: 0px;
         text-align: center;
+    }
+    #aboutSection p {
+        font-size: 15px;
     }
     #aboutSection .socialMedias-icons {
         margin-inline: auto;
@@ -108,5 +116,9 @@ footer p {
     }
     #copyrightSection {
         width: 100%;
+        margin-bottom: 0;
+    }
+    #copyrightSection p {
+        font-size: 12px;
     }
 }

@@ -2,37 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admins;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+
     public function home() {
-        return view('home.home');
+        return self::returnView('home.home');
     }
 
     public function about() {
-        return view('home.about');
-    }
-
-    public function menu() {
-        return view('home.menu');
+        return self::returnView('home.about');
     }
 
     public function career() {
-        return view('home.career');
+        return self::returnView('home.career');
     }
 
-    // TODO: UPDATE THIS LATER
     public function login() {
-        return view('auth.login');
+        return self::returnView('auth.login');
+    }
+
+    public function guest() {
+        return self::returnView('auth.guest_login');
     }
 
     public function register() {
-        return view('auth.register');
+        return self::returnView('auth.register');
     }
 
     public function forgetPassword() {
-        return view('home');
+        return self::returnView('home');
     }
 }

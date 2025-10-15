@@ -24,6 +24,28 @@ class AuthenticationController extends Controller
         return back()->withErrors(['email' => 'Incorrect email address or password.']);
     }
 
+    public function guest(Request $request)
+    {
+        $credentials = $request->validate([
+            'name' => 'required|string',
+        ]);
+        $credentials['user_type'] = 'Guest';
+
+        if (!Auth::attempt($credentials)) {
+            $user = User::create([
+                'name' => $credentials['name'],
+                'email' => null,
+                'password' => null,
+                'user_type' => 'Guest'
+            ]);
+            
+            Auth::login($user);
+        }
+
+        $request->session()->regenerate();
+        return redirect()->intended(route('menu'));
+    }
+
     public function register(Request $request)
     {
         $data = $request->validate([

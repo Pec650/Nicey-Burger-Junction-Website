@@ -1,22 +1,23 @@
 .sidebar-PC {
-    display: block;
+    top: 100px;
+    position: sticky;
     width: 25%;
-    background-color: white;
+    height: fit-content;
     padding-top: 16px;
-    border-right: #f9a833ff solid 5px;
+    background-color: #f9a833ff;
 }
 .sidebar-PC h1 {
     text-align: center;
     margin-top: 30px;
     margin-bottom: 40px;
-    color: rgb(67, 44, 26);
+    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 800;
 }
 
 .menu-options {
-    border-top: rgb(67, 44, 26) solid 2px;
-    border-bottom: rgb(67, 44, 26) solid 2px;
+    border-top: #f9a833ff solid 5px;
+    border-bottom: #f9a833ff solid 5px;
 }
 
 .menu-options button {
@@ -33,16 +34,26 @@
 }
 
 .menu-options button:hover {
-    border: #f9a833ff solid 2px;
-    border-inline: none;
+    background-color: lightgray;
+}
+
+.menu-options .selected {
+    color: white;
+    background-color: red;
+}
+
+.menu-options .selected:hover {
+    background-color: red;
 }
 
 .sidebar-Mobile {
     z-index: 999;
     display: none;
+    position: sticky;
+    top: 100px;
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 1400px) {
     .sidebar-PC {
         display: none;
     }
@@ -57,22 +68,23 @@
     }
 }
 
-.sidebar-Mobile #MenuButton {
+.sidebar-Mobile button {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 800;
     font-size: 25px;
     color: white;
     background-color: red;
     border: none;
+    text-transform: uppercase;
 }
 
 .Sidebar-Options {
+    position: sticky;
+    top: 158px;
+    display: none;
     z-index: 999;
-    visibility: hidden;
     width: 100%;
     margin-top: -1px;
-    position: absolute;
-    display: block;
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -85,11 +97,13 @@
     width: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #f9a833ff;
-    border: red solid 2px;
+    background-color: white;
+    border: none;
+    border-bottom: #f9a833ff solid 2px;
+    box-shadow: 2px 5px 20px 0px rgba(31, 24, 54, 0.2);
 }
 
-.Sidebar-Options button:hover {
+.Sidebar-Options button:active {
     color: white;
-    background-color: red;
+    background-color: #f9a833ff;
 }

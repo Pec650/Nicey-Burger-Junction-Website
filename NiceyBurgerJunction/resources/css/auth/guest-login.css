@@ -1,0 +1,46 @@
+@import url('../auth/login.css');
+
+.log-in-box {
+    margin-top: 50px;
+}
+.log-in-box h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+}
+.log-in-box #guest-submit {
+    margin-top: 40px;
+}
+.log-in-box .more-paragraph {
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+.log-in-box .incorrect-error-paragraph {
+    margin-top: -20px;
+    margin-bottom: -20px;
+}
+#guest-name {
+    font-size: 30px;
+}
+#guest-submit {
+    color: white;
+    border-color: #aaa;
+    background-color: #aaa;
+    margin-bottom: -200px;
+    font-size: 35px;
+    cursor: default;
+}
+.active-button {
+    background-color: red !important;
+    border-color: red !important;
+    color: white !important;
+    cursor: pointer !important;
+}
+.active-button:hover {
+    background-color: white !important;
+    color: red !important;
+}
+@media all and (max-width: 1400px) {
+    #guest-name {
+        font-size: 20px;
+    }
+}

@@ -18,59 +18,51 @@ main {
         background-position: 2000px;
     }
 }
-.container_menu {
-    background-color: white;
+.container-menu {
+    background-color: #f9a833ff;
     display: flex;
     margin-inline: auto;
+    max-width: 1800px;
+    width: 100%;
+    box-shadow: 2px 5px 20px 0px rgba(212, 144, 66, 0.2);
+    border-left: 5px solid red;
 }
 .main-content {
     position: relative;
     width: 75%;
-    height: 80vh;
+    min-height: 1000px;
     padding: 0;
-    height: 100%;
-    overflow: auto;
     padding-top: 25px;
     padding-bottom: 25px;
+    background-color: white;
+    border-left: 5px solid red;
 }
 #itemContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows:auto;
+    grid-template-rows: auto;
     gap: 32px;
-    padding-inline: 15px;
+    padding-inline: 32px;
+    padding-bottom: 100px;
 }
 @media all and (max-width: 1200px) {
-    .container_menu {
-        display: block !important;
-    }
     .main-content {
         width: 100% !important;
     }
     #itemContainer {
         margin-top: -15px;
-        display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
 }
-
-.container_menu {
-    max-width: 2000px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    position: relative;
-}
 .item {
     text-wrap: wrap;
-    margin-top: 10px;
-    margin-bottom: 10px;
     text-align: center;
-    padding: 40px;
+    padding: 50px 30px;
     border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     position: relative;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 460px;
+    height: 430px;
 }
 .item img {
     background-color: rgba(0, 0, 0, 0);
@@ -89,6 +81,8 @@ main {
     color: rgb(67, 44, 26);
     font-weight: 800;
     font-size: 25px;
+    text-transform: capitalize;
+    white-space: nowrap;
 }
 .item .price {
     color: rgb(67, 44, 26);
@@ -112,47 +106,12 @@ main {
     font-weight: 800;
     font-size: 18px;
     color: white;
-    border: #f9a833ff solid 3px;
+    border: #f9a833ff solid 5px;
     background-color: #f9a833ff;
 }
 .item .itemButton:hover {
     color: #f9a833ff;
     background-color: white;
-}
-.item .deleteButton {
-    z-index: 100;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 50%;
-    filter: none;
-    cursor: pointer;
-    border: none;
-    background-image: url("../images/Icons/CloseMoreIcon.png");
-    background-position: center;
-    background-size: cover;
-}
-#addNewButton {
-    z-index: 999;
-    position: absolute;
-    border-radius: 50%;
-    border: rgb(255, 102, 0) solid 5px;
-    width: 100px;
-    height: 100px;
-    bottom: 50px;
-    right: 50px;
-    cursor: pointer;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transition:
-        transform 0.12s ease-in-out;
-}
-#addNewButton:hover {
-    z-index: 999;
-    transform: scale(1.2);
 }
 @media all and (min-width: 1400px) {
     #itemContainer {
@@ -160,18 +119,48 @@ main {
     }
 }
 @media all and (max-width: 1400px) {
+    #itemContainer {
+        padding-top: 20px;
+        grid-template-columns: repeat(3, 1fr);
+    }
     footer {
         display: none !important;
     }
+    body, .container-menu {
+        background-color: white !important;
+    }
+    .container-menu, .main-content {
+        border-left: none;
+    }
+    .container-menu {
+        display: block;
+    }
     .main-content {
+        width: fit-content;
         padding-top: 30px;
         padding-bottom: 30px;
+        margin-inline: auto;
     }
     .item {
+        padding: 20px 5px;
         width: 300px;
+        height: 340px;
+    }
+    .item img {
+        height: 150px;
+        width: 150px;
     }
     .item .name {
         font-size: 20px;
+    }
+    .item .price {
+        font-size: 15px;
+    }
+    .item .itemButton {
+        font-size: 15px;
+        padding: 5px 5px;
+        right: 13%;
+        left: 13%;
     }
     #addNewButton {
         transform: scale(0.8);
@@ -182,8 +171,18 @@ main {
         transform: scale(1);
     }
 }
-@media all and (max-width: 1400px) {
-    .container_menu {
-        position: static;
+@media all and (max-width: 1000px) {
+    .main-content {
+        max-width: 100px;
+        width: 0px;
+    }
+    #itemContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media all and (max-width: 800px) {
+    #itemContainer {
+        grid-template-columns: repeat(1, 1fr);
     }
 }

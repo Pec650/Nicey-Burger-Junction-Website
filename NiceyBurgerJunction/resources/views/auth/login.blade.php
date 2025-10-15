@@ -20,11 +20,10 @@
                     <div class="show-pass"><div id="hide-icon" class="hide-pass"></div></div>
                 </button>
                 
-
                 <input type="submit" name="log-in-submit" value="LOGIN">
 
                 @if ($errors->any())
-                    <p class="incorrect-error-paragraph" id="incorrect-error-paragraph">{{ $errors->first() }}</p>
+                    <p class="incorrect-error-paragraph">{{ $errors->first() }}</p>
                 @endif
             </form>
         </div>

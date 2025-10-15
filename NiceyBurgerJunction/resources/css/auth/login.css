@@ -1,3 +1,4 @@
+* { color: rgb(67, 44, 26); }
 body {
     background-color: #f0e9e2;
     background-image: url("../../../public/images/Icons/Orange_Background.png");
@@ -48,6 +49,7 @@ main { background-color: rgba(0, 0, 0, 0); }
     padding-bottom: 50px;
 }
 .log-in-box h1 {
+    color: rgb(67, 44, 26);
     font-size: 50px;
     margin-bottom: 40px;
 }

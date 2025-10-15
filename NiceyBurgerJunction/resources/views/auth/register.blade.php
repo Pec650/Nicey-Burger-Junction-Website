@@ -32,7 +32,7 @@
                 <input type="submit" name="sign-up-submit" value="SIGN UP">
                 
                 @if ($errors->any())
-                    <p class="incorrect-error-paragraph" id="incorrect-error-paragraph">{{ $errors->first() }}</p>
+                    <p class="incorrect-error-paragraph">{{ $errors->first() }}</p>
                 @endif
             </form>
         </div>
