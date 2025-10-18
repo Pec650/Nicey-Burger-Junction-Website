@@ -12,11 +12,39 @@ input::-webkit-credentials-auto-fill-button {
 }
 
 @media all and (max-width: 1400px) {
-    * {
-        -ms-overflow-style: none !important;
-        scrollbar-width: none !important;
+    html {
+        scrollbar-width: none;
     }
-    *::-webkit-scrollbar {
+    html::-webkit-scrollbar {
         display: none !important;
+    }
+}
+
+html {
+    scrollbar-width: thick;
+    scrollbar-color: red #f9a833ff;
+}
+html::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+html::-webkit-scrollbar-thumb {
+    background-color: red;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-track {
+    background-color: #f9a833ff;
+    border-radius: 10px;
+}
+html::-webkit-scrollbar-button {
+    background-color: red;
+}
+
+@keyframes backgroundScroll {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
     }
 }

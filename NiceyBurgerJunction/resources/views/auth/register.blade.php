@@ -12,22 +12,30 @@
                 @csrf
 
                 <label for="username">Username</label><br>
-                <input name="username" type="text" value="{{ old('username') }}">
+                <input name="username" class="text-input" type="text" value="{{ old('username') }}">
 
                 <label for="email">Email</label><br>
-                <input name="email" type="text" value="{{ old('email') }}">
+                <input name="email" class="text-input" type="text" value="{{ old('email') }}">
 
                 <label for="password">Password</label><br>
-                <input name="password" id="sign-up-password" type="password" autocomplete="off">
-                <button type="button" id="show-password-button" class="show-password" onclick="showPassword('sign-up-password', 'hide-password')">
-                    <div class="show-pass"><div id="hide-password" class="hide-pass"></div></div>
-                </button>
+                <div class="password-container">
+                    <input name="password" id="sign-up-password" type="password" autocomplete="off">
+                    <button type="button" id="show-password-button" class="show-password" onclick="showPassword('sign-up-password', 'hide-password')">
+                        <div class="show-pass-container">
+                            <div class="show-pass"><div id="hide-password" class="hide-pass"></div></div>
+                        </div>
+                    </button>
+                </div>
                 
                 <label for="password_confirmation">Confirm Password</label><br>
-                <input name="password_confirmation" id="sign-up-confirm-password" type="password" autocomplete="off">
-                <button type="button" id="show-password-button" class="show-password" onclick="showPassword('sign-up-confirm-password', 'hide-confirm')">
-                    <div class="show-pass"><div id="hide-confirm" class="hide-pass"></div></div>
-                </button>
+                <div class="password-container">
+                    <input name="password_confirmation" id="sign-up-confirm-password" type="password" autocomplete="off">
+                    <button type="button" id="show-password-button" class="show-password" onclick="showPassword('sign-up-confirm-password', 'hide-confirm')">
+                        <div class="show-pass-container">
+                            <div class="show-pass"><div id="hide-confirm" class="hide-pass"></div></div>
+                        </div>
+                    </button>
+                </div>
 
                 <input type="submit" name="sign-up-submit" value="SIGN UP">
                 

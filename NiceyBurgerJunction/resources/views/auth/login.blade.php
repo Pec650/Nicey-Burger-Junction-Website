@@ -12,13 +12,17 @@
                 @csrf
 
                 <label for="log-in-email">Email</label><br>
-                <input name="email" type="text">
+                <input name="email" class="text-input" type="text">
 
                 <label for="log-in-password">Password</label><br>
-                <input name="password" id="log-in-password" type="password" autocomplete="off">
-                <button type="button" id="show-password-button" class="show-password" onclick="showPassword()">
-                    <div class="show-pass"><div id="hide-icon" class="hide-pass"></div></div>
-                </button>
+                <div class="password-container">
+                    <input name="password" id="log-in-password" type="password" autocomplete="off">
+                    <button type="button" id="show-password-button" class="show-password" onclick="showPassword()">
+                        <div class="show-pass-container">
+                            <div class="show-pass"><div id="hide-icon" class="hide-pass"></div></div>
+                        </div>
+                    </button>
+                </div>
                 
                 <input type="submit" name="log-in-submit" value="LOGIN">
 

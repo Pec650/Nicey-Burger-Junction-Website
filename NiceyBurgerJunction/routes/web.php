@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController as AuthControllers;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\OrderController;
+use App\Models\Orders;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,15 +17,24 @@ Route::get('/career', [PageController::class, 'career'])->name('career');
 /******************************************************************************************/
 
 /* MENU PAGES */
+Route::get('/menu/address', [MenuController::class, 'address'])->name('menu.address');
+Route::post('/menu/address/id={id}', [MenuController::class, 'set_address'])->name('menu.set_address');
+Route::post('/menu/reset_address', [MenuController::class, 'reset_address'])->name('menu.reset_address');
 Route::get('/menu', function() { return redirect()->route('menu.type', ['type' => 'buy-1-take-1']); })->name('menu');
 Route::get('/menu/{type}', [MenuController::class, 'menu'])->name('menu.type');
-Route::get('menu/product/productID={id}', function() { return redirect()->route('menu.type', ['type' => 'buy-1-take-1']); });
-Route::post('menu/product/productID={id}', [OrderController::class, 'order_product'])->name('menu.product');
+Route::get('/menu/product/product_id={id}', [OrderController::class, 'order_product_show'])->name('menu.product.show');
+Route::post('/menu/product/product_id={id}', [OrderController::class, 'order_product'])->name('menu.product');
 /******************************************************************************************/
 
 /* ORDER PAGES */
 Route::get('/orders', [OrderController::class, 'order_check'])->name('order.check');
-Route::post('/create-order', [OrderController::class, 'create_order'])->name('order.create');
+Route::post('/orders/create', [OrderController::class, 'create_order'])->name('order.create');
+Route::get('/orders/edit/order_id={id}', [OrderController::class, 'edit_order_show'])->name('order.edit.show');
+Route::post('/orders/edit/order_id={id}', [OrderController::class, 'edit_order'])->name('order.edit');
+Route::post('/orders/update', [OrderController::class, 'update_order'])->name('order.update');
+Route::get('/orders/delete/order_id={id}', function() { return abort(404); });
+Route::post('/orders/delete/order_id={id}', [OrderController::class, 'delete_order'])->name('order.delete');
+Route::post('/orders/empty', [OrderController::class, 'empty_order'])->name('order.empty');
 /******************************************************************************************/
 
 /* AUTHENTICATION PAGES */

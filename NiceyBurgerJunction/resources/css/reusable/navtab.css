@@ -59,7 +59,7 @@
 #pcNav .log-out-button:hover {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: white;
     color: rgb(67, 44, 26);
 }
 #pcNav .log-out-button:active {
@@ -80,7 +80,7 @@
 #pcNav .log-in-button:hover {
     margin-top: auto;
     margin-bottom: auto;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: white;
     color: red;
 }
 #review-order-button-click {
@@ -152,7 +152,7 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     width: 100%;
     text-align: center;
-    padding-bottom: 150px;
+    padding-bottom: 150px !important;
 }
 #expandTab .navigationTab {
     display: block;

@@ -1,0 +1,85 @@
+#successBox {
+    width: 100%;
+    top: 0;
+    margin-top: 130px;
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#successBox #success-box {
+    left: auto;
+    right: auto;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(223, 89, 27, 0.2), 0 6px 20px 0 rgba(223, 89, 27, 0.2);
+    padding-inline: 30px;
+    width: 100%;
+    min-width: 750px;
+    max-width: 750px;
+    position: relative;
+    border-radius: 10px;
+    word-wrap: break-word;
+    background-color: red;
+    color: white;
+}
+
+#successBox #successful-text {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    text-align: center;
+    margin-top: -25px;
+    color: white;
+}
+
+#successBox #successful-close {
+    background-image: url("../../../public/images/Icons/CloseIcon.png");
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    cursor: pointer;
+}
+
+@media all and (max-width: 1400px) {
+    #successBox #successBox {
+        scale: 0.8;
+    }
+
+    #successBox #success-box {
+        min-width: 0;
+        max-width: 80%;
+    }
+
+    #successBox #successful-text {
+        font-size: 15px !important;
+    }
+
+    #successBox #successful-close {
+        margin-top: 10px !important;
+        width: 25px !important;
+        height: 25px !important;
+    }
+}
+
+@media all and (max-width: 400px) {
+    #successBox #successful-text {
+        font-size: 13px !important;
+    }
+
+    #successBox #successful-close {
+        margin-top: 10px !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
+#successBox #successful-close:active {
+    scale: 0.9;
+}

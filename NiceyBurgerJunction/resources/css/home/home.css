@@ -12,11 +12,6 @@
     justify-content: center;
     animation: backgroundScroll 40s linear infinite;
 }
-@keyframes backgroundScroll {
-    to {
-        background-position: 2000px;
-    }
-}
 .content, .about-content {
     border-top: red solid 10px;
     margin-inline: auto;

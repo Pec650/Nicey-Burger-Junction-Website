@@ -39,8 +39,15 @@
     background-color: white !important;
     color: red !important;
 }
-@media all and (max-width: 1400px) {
+@media all and (max-width: 1000px) {
+    .log-in-box h1 {
+        font-size: 30px;
+    }
     #guest-name {
         font-size: 20px;
+    }
+    .log-in-box .more-paragraph {
+        margin-top: 40px;
+        font-size: 18px;
     }
 }

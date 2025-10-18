@@ -1,10 +1,25 @@
 @extends('layouts.home_layout')
 @section('title', "Menu")
 @section('style')
-    @vite(['resources/css/reusable/menusidebar.css', 'resources/css/home/menu.css', 'resources/js/menu.js'])
+    @vite(['resources/css/reusable/menusidebar.css', 'resources/css/home/menu.css'])
 @endsection
 @section('content')
+<div id="address-header">
+    <h1>{{ $address['street'] }}</h1>
+    <h3>{{ $address['barangay'] }}, {{ $address['city'] }}</h3>
+    <center>
+    @if ($order_count > 0) 
+        <button id="change-address" value="{{ route('menu.reset_address') }}">CHANGE ADDRESS</button>
+    @else
+        <form action="{{ route('menu.reset_address') }}" method="POST">
+            @csrf
+            <button id="change-address">CHANGE ADDRESS</button>
+        </form>
+    @endif
+    </center>
+</div>
 <div class="container-menu">
+
     <!-- Sidebar -->
     <div class="sidebar-PC">
         <h1>MENU</h1>
@@ -33,7 +48,11 @@
             @if ($products)
             @foreach ($products as $p)
             <div class="item">
-                <img src="{{ asset('images/Icons/TemporaryImage.png') }}" alt="}">
+                @if ($p['img_dir'] != null and file_exists("images/Menu/".$p['img_dir']))
+                    <img src="{{ asset("images/Menu/".$p['img_dir']) }}" alt="{{ $p['name'] }}">
+                @else
+                    <img src="{{ asset('images/Icons/TemporaryImage.png') }}" alt="{{ $p['name'] }}">
+                @endif
                 <div class="name">{{ Str::limit($p['name'], 20) }}</div>
                 <div class="price">₱ {{ number_format((float) $p['price'], 2) }}</div>
                 @guest
@@ -51,4 +70,15 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+    @vite(['resources/js/menu.js'])
+    @if ($order_count > 0) 
+    <script>
+        const changeAddressButton = document.getElementById("change-address");
+        changeAddressButton.addEventListener('click', () => {
+            showConfirm(changeAddressButton.value, "Are you sure you want to change your address? <b>This action will cancel your order.</b>");
+        });
+    </script>
+    @endif
 @endsection

@@ -9,11 +9,6 @@ body {
     animation: backgroundScroll 40s linear infinite;
 }
 main { background-color: rgba(0, 0, 0, 0); }
-@keyframes backgroundScroll {
-    to {
-        background-position: 2000px;
-    }
-}
 .error {
     font-size: 20px;
     font-weight: 800;
@@ -59,17 +54,13 @@ main { background-color: rgba(0, 0, 0, 0); }
     font-size: 25px;
     padding: 15px 15px;
     margin-inline: auto;
-    margin-top: 10px;
-    margin-bottom: 30px;
     width: 100%;
     box-sizing: border-box;
     -webkit-box-sizing:border-box;
     -moz-box-sizing: border-box;
 }
-.form-container input[type=checkbox] {
-    margin-top: -2px;
-    width: 20px;
-    height: 20px;
+.form-container .text-input {
+    margin-top: 10px;
     margin-bottom: 30px;
 }
 .form-container form {
@@ -82,6 +73,7 @@ main { background-color: rgba(0, 0, 0, 0); }
     width: 100%;
     cursor: pointer;
     border-radius: 50px;
+    margin-top: 25px;
     padding-top: 15px;
     padding-bottom: 15px;
     background-color: rgb(251, 155, 0);
@@ -121,45 +113,36 @@ main { background-color: rgba(0, 0, 0, 0); }
 .sign-up-box .more-paragraph a:hover {
     color: red;
 }
+.sign-up-box .password-container {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
 .sign-up-box .show-password {
     z-index: 10;
-    width: 71px;
-    height: 71px;
     border: 2px solid black;
     position: absolute;
     background-color: #fb9b00;
+    position: absolute;
+    right: 0;
+    aspect-ratio: 1 / 1;
+    height: 100%;
 }
 .sign-up-box .show-password:active {
     background-color: red;
-}
-.sign-up-box #show-password-button {
-    transform: translate(630px, -100.5px);
-}
-@media all and (min-width: 1000px) {
-    .sign-up-container {
-        margin-top: -140px;
-        transform: scale(0.8);
-    }
-}
-@media all and (max-width: 1000px) {
-    body, main {
-        background-color: white;
-        background-image: none;
-    }
-    .sign-up-container {
-        padding-top: 50px;
-        padding-bottom: 50px;
-    }
-    .sign-up-box {
-        border: none;
-        box-shadow: none;
-    }
 }
 #expandTab {
     padding-bottom: 0 !important;
 }
 #review-order-button-click, #expanded-review-order-button-click {
     display: none !important;
+}
+.show-pass-container {
+    height: 50%;
+    width: 50%;
+    margin-top: 50%;
 }
 .show-pass {
     translate: -85px -122px;
@@ -204,4 +187,44 @@ main { background-color: rgba(0, 0, 0, 0); }
     background-color: white;
     visibility: visible;
     translate: 13px -11px;
+}
+@media all and (min-width: 1000px) {
+    .sign-up-container {
+        margin-top: -140px;
+        transform: scale(0.8);
+    }
+}
+@media all and (max-width: 1000px) {
+    body, main {
+        background-color: white;
+        background-image: none;
+    }
+    .sign-up-container {
+        max-width: 500px;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    .sign-up-box {
+        border: none;
+        box-shadow: none;
+        padding-inline: 10px;
+    }
+    .sign-up-box h1 {
+        margin-top: -20px;
+    }
+    label {
+        font-size: 20px !important;
+    }
+    input {
+        padding: 5px 5px !important;
+        font-size: 20px !important;
+    }
+    .show-pass-container {
+        margin-left: -2px;
+        margin-top: 10px;
+        scale: 0.5;
+    }
+    .sign-up-box .more-paragraph, .log-in-box .incorrect-error-paragraph {
+        font-size: 20px;
+    }
 }

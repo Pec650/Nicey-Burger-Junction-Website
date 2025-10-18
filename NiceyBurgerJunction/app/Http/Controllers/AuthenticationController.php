@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -11,12 +12,21 @@ class AuthenticationController extends Controller
 {
     public function login(Request $request)
     {
+        $guest_id = (Auth::check()) ? Auth::id() : null;
+        
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
+        $credentials['address_id'] = null;
+
         if (Auth::attempt($credentials)) {
+            if ($guest_id) {
+                Orders::turnoverPendingOrders($guest_id);
+            } else {
+                Orders::removePendingOrders();
+            }
             $request->session()->regenerate();
             return redirect()->intended(route('index'));
         }
@@ -26,21 +36,15 @@ class AuthenticationController extends Controller
 
     public function guest(Request $request)
     {
-        $credentials = $request->validate([
-            'name' => 'required|string',
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => null,
+            'password' => null,
+            'user_type' => 'Guest',
+            'address_id' => (session('address_id')) ? session('address_id') : null,
         ]);
-        $credentials['user_type'] = 'Guest';
 
-        if (!Auth::attempt($credentials)) {
-            $user = User::create([
-                'name' => $credentials['name'],
-                'email' => null,
-                'password' => null,
-                'user_type' => 'Guest'
-            ]);
-            
-            Auth::login($user);
-        }
+        Auth::login($user);
 
         $request->session()->regenerate();
         return redirect()->intended(route('menu'));
@@ -48,6 +52,8 @@ class AuthenticationController extends Controller
 
     public function register(Request $request)
     {
+        $guest_id = (Auth::check()) ? Auth::id() : null;
+
         $data = $request->validate([
             'username' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -63,11 +69,19 @@ class AuthenticationController extends Controller
 
         Auth::login($user);
 
+        if ($guest_id) {
+            Orders::turnoverPendingOrders($guest_id);
+        } else {
+            Orders::removePendingOrders();
+        }
+
         return redirect()->route('index');
     }
 
     public function logout(Request $request)
     {
+        User::where(['id' => Auth::id()])->update(['address_id' => null]);
+        Orders::removePendingOrders();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

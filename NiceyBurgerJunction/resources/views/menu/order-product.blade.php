@@ -1,7 +1,7 @@
 @extends('layouts.home_layout')
 @section('title', "Order Product")
 @section('style')
-    @vite(['resources/css/menu/order-product.css', 'resources/js/order-product.js'])
+    @vite(['resources/css/menu/order-product.css'])
 @endsection
 @section('content')
 <div id="order-container">
@@ -10,7 +10,11 @@
     </div>
     <div id="product-info-container">
         <div id="img-container">
-            <img id="product-img" src="{{ asset('images/Icons/TemporaryImage.png') }}">
+            @if ($product['img_dir'] != null and file_exists("images/Menu/".$product['img_dir']))
+                <img id="product-img" src="{{ asset("images/Menu/".$product['img_dir']) }}" alt="{{ $product['name'] }}">
+            @else
+                <img id="product-img" src="{{ asset('images/Icons/TemporaryImage.png') }}" alt="{{ $product['name'] }}">
+            @endif
         </div>
         <div id="form-container">
             <h1 id="product-name">{{ $product['name']  }}</h1>
@@ -42,9 +46,12 @@
                 <p id="character-counter">Limit: 0 / 255</p>
 
                 <h3 id="total-display">Total: ₱ {{ number_format((float) $product['price'], 2) }}</h3>
-                <input type="submit" name="submit-order" id="submit-order" value="ADD TO CART">
+                <input type="submit" id="submit-order" value="ADD TO CART">
             </form>
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+    @vite(['resources/js/order-product.js'])
 @endsection

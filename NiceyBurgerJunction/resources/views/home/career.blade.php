@@ -13,7 +13,6 @@
     </div>
 </div>
 <div class="career-content">
-    <hr>
 
     <h1>WHY JOIN US?</h1>
     <div class="join-paragraph">
@@ -24,13 +23,27 @@
 
     <h1>WE ARE HIRING</h1>
 
-    <span class="career-options">
-
-        <button>Cashier</button>
-        <button>Manager</button>
-        <button>Deliver Driver</button>
-
-    </span>
+    <div id="career-options-container">
+        <span class="career-options">
+            <div>
+                <center>
+                    <img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Manager">
+                    <h1>Manager</h1>
+                    <p>Be part of Nicey Burger Junction by being a manager.</p>
+                    <button>APPLY HERE</button>
+                </center>
+            </div>
+            <div>
+                <center>
+                    <img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Manager">
+                    <h1>Cashier</h1>
+                    <p>Be part of Nicey Burger Junction by being a cashier.</p>
+                    <button>APPLY HERE</button>
+                </center>
+            </div>
+        </span>
+    </div>
+    
 </div>
 @endsection
 @section('script')

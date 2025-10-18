@@ -14,6 +14,8 @@
         @yield('content')
     </main>
     @include('reusable.footer')
+    @include('reusable.success')
+    @include('reusable.confirmation')
     @yield('script')
 </body>
 </html>
