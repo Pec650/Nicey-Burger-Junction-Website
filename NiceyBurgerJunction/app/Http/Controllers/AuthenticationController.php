@@ -19,14 +19,15 @@ class AuthenticationController extends Controller
             'password' => 'required|string',
         ]);
 
-        $credentials['address_id'] = null;
-
         if (Auth::attempt($credentials)) {
             if ($guest_id) {
                 Orders::turnoverPendingOrders($guest_id);
             } else {
                 Orders::removePendingOrders();
             }
+            User::where('id', Auth::id())
+                ->update(['branch_id' => (session('branch_id')) ? session('branch_id') : null]);
+            session(['branch_id' => null]);
             $request->session()->regenerate();
             return redirect()->intended(route('index'));
         }
@@ -41,11 +42,12 @@ class AuthenticationController extends Controller
             'email' => null,
             'password' => null,
             'user_type' => 'Guest',
-            'address_id' => (session('address_id')) ? session('address_id') : null,
+            'branch_id' => (session('branch_id')) ? session('branch_id') : null,
         ]);
 
         Auth::login($user);
 
+        session(['branch_id' => null]);
         $request->session()->regenerate();
         return redirect()->intended(route('menu'));
     }
@@ -64,7 +66,8 @@ class AuthenticationController extends Controller
             'name' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_type' => 'Member'
+            'user_type' => 'Member',
+            'branch_id' => (session('branch_id')) ? session('branch_id') : null,
         ]);
 
         Auth::login($user);
@@ -74,13 +77,14 @@ class AuthenticationController extends Controller
         } else {
             Orders::removePendingOrders();
         }
-
+        session(['branch_id' => null]);
+        $request->session()->regenerate();
         return redirect()->route('index');
     }
 
     public function logout(Request $request)
     {
-        User::where(['id' => Auth::id()])->update(['address_id' => null]);
+        User::where(['id' => Auth::id()])->update(['branch_id' => null]);
         Orders::removePendingOrders();
         Auth::logout();
         $request->session()->invalidate();

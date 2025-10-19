@@ -4,16 +4,16 @@
     @vite(['resources/css/reusable/menusidebar.css', 'resources/css/home/menu.css'])
 @endsection
 @section('content')
-<div id="address-header">
-    <h1>{{ $address['street'] }}</h1>
-    <h3>{{ $address['barangay'] }}, {{ $address['city'] }}</h3>
+<div id="branch-header">
+    <h1>{{ $branch['branch_name'] }}</h1>
+    <h3>{{ $branch['barangay'] }}, {{ $branch['city'] }}</h3>
     <center>
     @if ($order_count > 0) 
-        <button id="change-address" value="{{ route('menu.reset_address') }}">CHANGE ADDRESS</button>
+        <button id="change-branch" value="{{ route('menu.reset_branch') }}">CHANGE ADDRESS</button>
     @else
-        <form action="{{ route('menu.reset_address') }}" method="POST">
+        <form action="{{ route('menu.reset_branch') }}" method="POST">
             @csrf
-            <button id="change-address">CHANGE ADDRESS</button>
+            <button id="change-branch">CHANGE ADDRESS</button>
         </form>
     @endif
     </center>
@@ -75,9 +75,9 @@
     @vite(['resources/js/menu.js'])
     @if ($order_count > 0) 
     <script>
-        const changeAddressButton = document.getElementById("change-address");
-        changeAddressButton.addEventListener('click', () => {
-            showConfirm(changeAddressButton.value, "Are you sure you want to change your address? <b>This action will cancel your order.</b>");
+        const changeBranchButton = document.getElementById("change-branch");
+        changeBranchButton.addEventListener('click', () => {
+            showConfirm(changeBranchButton.value, "Are you sure you want to change your branch? <b>This action will cancel your order.</b>");
         });
     </script>
     @endif

@@ -15,6 +15,7 @@
     </main>
     @include('reusable.footer')
     @include('reusable.success')
+    @include('reusable.error')
     @include('reusable.confirmation')
     @yield('script')
 </body>

@@ -28,11 +28,11 @@
             @auth
             <a href="{{ route('order.check') }}">
                 <div id="review-order-button-click">
-                    {{-- if placed order: --}}
-                        {{-- <div class="order-qty" style="padding-inline: 15px; right: 13px; font-weight: 800;">ongoing</div> --}}
-                    {{-- else --}}
+                    @if ($ongoing)
+                        <div class="order-qty" style="margin-left: -25px;">ONGOING</div>
+                    @else
                         <div class="order-qty">{{ $order_count }}</div>
-                    {{-- endif --}}
+                    @endif
                     <img src="{{ asset('images/Icons/ViewOrderIcon.png') }}" class="review-order">
                 </div>
             </a>
@@ -63,7 +63,11 @@
     @auth
         <div id="expanded-review-order-button-click">
             <a href="{{ route('order.check') }}">
-                <div class="expanded-order-qty">{{ $order_count }}</div>
+                @if ($ongoing)
+                    <div class="expanded-order-qty" style="margin-left: -25px;">ONGOING</div>
+                @else
+                    <div class="expanded-order-qty">{{ $order_count }}</div>
+                @endif
                 <img src="{{ asset('images/Icons/ViewOrderIcon.png') }}" class="expanded-review-order">
             </a>
         </div><br><br><br><br>

@@ -1,0 +1,179 @@
+* {
+    color: rgb(67, 44, 26);
+}
+main {
+    background-color: #f0e9e2;
+    background-image: url("../../../public/images/Icons/Orange_Background.png");
+    background-repeat: repeat;
+    background-size: 200px;
+    align-items: center;
+    justify-content: center;
+    animation: backgroundScroll 40s linear infinite;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+#PC-complete {
+    display: block;
+}
+#MB-complete {
+    display: none;
+}
+#order-container {
+    border-top: red solid 15px;
+    max-width: 800px;
+    margin-inline: auto;
+    padding: 25px 5px;
+    padding-inline: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-wrap: balance;
+}
+#order-container #your-header {
+    margin-top: 80px;
+    font-weight: 500;
+}
+#order-container #order-header {
+    font-weight: 800;
+}
+#order-container #order-number {
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 120px;
+}
+#order-container #branchH {
+    margin-top: 110px;
+    text-transform: uppercase;
+    font-size: 35px;
+    font-weight: 800;
+}
+#order-container #addH {
+    margin-top: 15px;
+    font-size: 25px;
+}
+#order-container #veiwMap {
+    background-color: #f9a833ff;
+    border: 5px solid #f9a833ff;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin-top: 30px;
+    padding: 10px 25px;
+    border-radius: 50px;
+    min-width: 200px;
+}
+#order-container #phoneH {
+    margin-top: 50px;
+}
+#order-container #order-summary-header {
+    margin-top: 50px;
+    font-weight: 800;
+}
+#order-container #summaryOrders {
+    background-color: #f9a833ff;
+    border: 5px solid #f9a833ff;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    margin-top: 30px;
+    padding: 10px 25px;
+    border-radius: 50px;
+    min-width: 200px;
+}
+
+.place-order-buttons {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    gap: 10px;
+}
+#cancel, #complete {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+#cancel {
+    background-color: red;
+    border: red solid 5px;
+    color: white;
+}
+#complete {
+    background-color: rgb(10, 195, 0);
+    border: rgb(10, 195, 0) solid 5px;
+    color: white;
+}
+@media all and (min-width: 1200px) {
+    #order-container #veiwMap:hover, #order-container #summaryOrders:hover {
+        background-color: white;
+        color: #f9a833ff;
+    }
+    #cancel:hover {
+        background-color: white;
+        color: red;
+    }
+    #complete:hover {
+        background-color: white;
+        color: rgb(10, 195, 0);
+    }
+}
+
+@media all and (max-width: 1200px) {
+    main {
+        background-image: none;
+        background-color: white;
+    }
+    #order-container {
+        border: none;
+        box-shadow: none;
+    }
+    #PC-complete {
+        display: none;
+    }
+    #MB-complete {
+        display: block;
+    }
+    #order-container {
+        padding-inline: 10px;
+    }
+    #order-container #your-header {
+        margin-top: 0px;
+    }
+    #order-container #branchH {
+        font-size: 25px;
+    }
+    #order-container #addH {
+        font-size: 20px;
+    }
+    .place-order-buttons {
+        display: block;
+    }
+    #order-container #veiwMap:active, #order-container #summaryOrders:active {
+        background-color: white;
+        color: #f9a833ff;
+    }
+    #cancel:active {
+        background-color: white;
+        color: red;
+    }
+    #complete:active {
+        background-color: white;
+        color: rgb(10, 195, 0);
+    }
+    #complete {
+        margin-bottom: 25px;
+    }
+    #branchH {
+        font-size: 20px;
+    }
+    #addH {
+        font-size: 18px;
+    }
+}

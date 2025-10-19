@@ -1,5 +1,5 @@
 @extends('layouts.home_layout')
-@section('title', "Order Product")
+@section('title', ($order) ? $order['product_name'] : "Edit Product")
 @section('style')
     @vite(['resources/css/menu/order-edit.css'])
 @endsection

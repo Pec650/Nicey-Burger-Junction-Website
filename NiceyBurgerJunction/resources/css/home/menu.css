@@ -13,7 +13,7 @@ main {
     justify-content: center;
     animation: backgroundScroll 40s linear infinite;
 }
-#address-header {
+#branch-header {
     color: white;
     background-color: #f9a833ff;
     max-width: 1800px;
@@ -23,19 +23,19 @@ main {
     border-inline: 5px solid red;
     border-bottom: 5px solid red;
 }
-#address-header h1 {
+#branch-header h1 {
     font-size: 45px;
     font-weight: 800;
     text-transform: uppercase;
     text-align: center;
 }
-#address-header h3 {
+#branch-header h3 {
     font-size: 25px;
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
 }
-#address-header #change-address {
+#branch-header #change-branch {
     padding: 10px 16px;
     border-radius: 999px;
     cursor: pointer;
@@ -147,13 +147,13 @@ main {
     #itemContainer {
         grid-template-columns: repeat(3, 1fr);
     }
-    #address-header #change-address:hover {
+    #branch-header #change-branch:hover {
         color: red;
         background-color: white;
     }
 }
 @media all and (max-width: 1400px) {
-    #address-header #change-address:active {
+    #branch-header #change-branch:active {
         color: red;
         background-color: white;
     }
@@ -210,13 +210,13 @@ main {
     }
 }
 @media all and (max-width: 1000px) {
-    #address-header h1 {
+    #branch-header h1 {
         font-size: 25px;
         font-weight: 800;
         text-transform: uppercase;
         text-align: center;
     }
-    #address-header h3 {
+    #branch-header h3 {
         font-size: 15px;
         font-weight: 600;
         text-transform: uppercase;

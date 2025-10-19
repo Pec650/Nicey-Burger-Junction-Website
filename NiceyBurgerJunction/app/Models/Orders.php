@@ -30,6 +30,17 @@ class Orders extends Model
         return 0;
     }
 
+    public static function hasOngoingOrders()
+    {
+        if (Auth::check()) {
+            $ongoing_count = self::where('user_id', Auth::id())
+                                    ->where('status', 'Ongoing')
+                                    ->count();
+            return $ongoing_count > 0;
+        }
+        return false;
+    }
+
     public static function removePendingOrders()
     {
         if (Auth::check()) {

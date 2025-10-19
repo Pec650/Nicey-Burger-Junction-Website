@@ -20,3 +20,11 @@ if (orderDelete) {
         showConfirm(orderDelete.value, "Are you sure you want to <b>cancel your order?</b>");
     });
 }
+
+
+const startOrder = document.getElementById("start-order");
+if (startOrder) {
+    startOrder.addEventListener('click', () => {
+        showConfirm(startOrder.value, "<b>Please confirm to place your order.</b>");
+    });
+}

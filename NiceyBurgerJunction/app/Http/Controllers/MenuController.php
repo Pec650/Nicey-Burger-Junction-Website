@@ -6,50 +6,68 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Products;
-use App\Models\Address;
+use App\Models\Branch;
 use App\Models\Orders;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
-    public function address()
+    public function branch(Request $request)
     {
-        $address = Address::all();
-        return self::returnView('home.address-select')->with('addresses', $address);
+        if (Auth::check() && Auth::user()->branch_id != null) {
+            return redirect()->route('menu');
+        }
+        if (!Auth::check() && session('branch_id')) {
+            return redirect()->route('menu');
+        }
+
+        if ($request->input('search')) {
+            $search = $request->input('search');
+
+            $branch = Branch::where('branch_name', 'like', "%{$search}%")
+                            ->orWhere('barangay', 'like', "%{$search}%")
+                            ->orWhere('city', 'like', "%{$search}%")
+                            ->get();
+        } else {
+            $branch = Branch::all();
+        }
+
+        return self::returnView('home.branch')->with('branches', $branch);
     }
 
-    public function set_address($id) {
+    public function set_branch($id) {
         if (Auth::check()) {
-            User::where(['id' => Auth::id()])->update(['address_id' => $id]);
+            User::where(['id' => Auth::id()])->update(['branch_id' => $id]);
             Orders::removePendingOrders();
         } else {
-            session(['address_id' => $id]);
+            session(['branch_id' => $id]);
         }
         return redirect()->route('menu');
     }
 
-    public function reset_address()
+    public function reset_branch()
     {
         if (Auth::check()) {
-            User::where(['id' => Auth::id()])->update(['address_id' => null]);
+            User::where(['id' => Auth::id()])->update(['branch_id' => null]);
             Orders::removePendingOrders();
         } else {
-            session(['address_id' => null]);
+            session(['branch_id' => null]);
         }
         return redirect()->route('menu');
     }
 
     public function menu($type)
     {
-        if (Auth::check() && Auth::user()->address_id == null) {
-            return redirect()->route('menu.address');
+        if (Auth::check() && Auth::user()->branch_id == null) {
+            return redirect()->route('menu.branch');
         }
-        if (!Auth::check() && !session('address_id')) {
-            return redirect()->route('menu.address');
+        if (!Auth::check() && !session('branch_id')) {
+            return redirect()->route('menu.branch');
         }
 
-        $address_id = (Auth::check()) ? Auth::user()->address_id : session('address_id');
-        $address = Address::where('id', $address_id)->first();
+        $branch_id = (Auth::check()) ? Auth::user()->branch_id : session('branch_id');
+        $branch = Branch::where('id', $branch_id)->first();
 
         $type = Str::title(str_replace('-', ' ', $type));
         $products = Products::where('type', $type)->get();
@@ -57,7 +75,7 @@ class MenuController extends Controller
             return self::returnView('home.menu')
                 ->with('type', $type)
                 ->with('products', $products)
-                ->with('address', $address);
+                ->with('branch', $branch);
         }
         return redirect()->route('menu');
     }

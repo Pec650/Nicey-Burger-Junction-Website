@@ -17,9 +17,9 @@ Route::get('/career', [PageController::class, 'career'])->name('career');
 /******************************************************************************************/
 
 /* MENU PAGES */
-Route::get('/menu/address', [MenuController::class, 'address'])->name('menu.address');
-Route::post('/menu/address/id={id}', [MenuController::class, 'set_address'])->name('menu.set_address');
-Route::post('/menu/reset_address', [MenuController::class, 'reset_address'])->name('menu.reset_address');
+Route::get('/menu/branch', [MenuController::class, 'branch'])->name('menu.branch');
+Route::post('/menu/branch/id={id}', [MenuController::class, 'set_branch'])->name('menu.set_branch');
+Route::post('/menu/reset_branch', [MenuController::class, 'reset_branch'])->name('menu.reset_branch');
 Route::get('/menu', function() { return redirect()->route('menu.type', ['type' => 'buy-1-take-1']); })->name('menu');
 Route::get('/menu/{type}', [MenuController::class, 'menu'])->name('menu.type');
 Route::get('/menu/product/product_id={id}', [OrderController::class, 'order_product_show'])->name('menu.product.show');
@@ -35,6 +35,16 @@ Route::post('/orders/update', [OrderController::class, 'update_order'])->name('o
 Route::get('/orders/delete/order_id={id}', function() { return abort(404); });
 Route::post('/orders/delete/order_id={id}', [OrderController::class, 'delete_order'])->name('order.delete');
 Route::post('/orders/empty', [OrderController::class, 'empty_order'])->name('order.empty');
+/******************************************************************************************/
+
+/* PLACED ORDER PAGES */
+Route::post('/orders/placed', [OrderController::class, 'place_order'])->name('order.place');
+Route::get('/orders/placed', [OrderController::class, 'ongoing_order'])->name('order.ongoing');
+Route::get('/orders/placed/map', [OrderController::class, 'order_map'])->name('order.map');
+Route::get('/orders/placed/list', [OrderController::class, 'order_list'])->name('order.list');
+Route::post('/orders/placed/list/view/product_id={id}', [OrderController::class, 'order_view'])->name('order.view');
+Route::get('/orders/view/product_id={id}', [OrderController::class, 'order_view_show'])->name('order.view.show');
+Route::post('/orders/cancel', [OrderController::class, 'cancel_order'])->name('order.cancel');
 /******************************************************************************************/
 
 /* AUTHENTICATION PAGES */
