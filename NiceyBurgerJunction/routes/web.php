@@ -43,8 +43,9 @@ Route::get('/orders/placed', [OrderController::class, 'ongoing_order'])->name('o
 Route::get('/orders/placed/map', [OrderController::class, 'order_map'])->name('order.map');
 Route::get('/orders/placed/list', [OrderController::class, 'order_list'])->name('order.list');
 Route::post('/orders/placed/list/view/product_id={id}', [OrderController::class, 'order_view'])->name('order.view');
-Route::get('/orders/view/product_id={id}', [OrderController::class, 'order_view_show'])->name('order.view.show');
+Route::get('/orders/view/order_id={id}', [OrderController::class, 'order_view_show'])->name('order.view.show');
 Route::post('/orders/cancel', [OrderController::class, 'cancel_order'])->name('order.cancel');
+Route::post('orders/complete/order_id={id}', [OrderController::class, 'complete_order'])->name('order.complete');
 /******************************************************************************************/
 
 /* AUTHENTICATION PAGES */

@@ -25,14 +25,22 @@
 
     <div id="PC-complete">
         <center class="place-order-buttons">
-            <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
-            <button id="complete">COMPLETE</button>
+            @if ($cancellable)
+                <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
+            @else
+                <button class="uncancellable">CANCEL</button>
+            @endif
+            <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button>
         </center>
     </div>
     <div id="MB-complete">
         <center class="place-order-buttons">
-            <button id="complete">COMPLETE</button>
-            <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
+            <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button>
+            @if ($cancellable)
+                <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
+            @else
+                <button class="uncancellable">CANCEL</button>
+            @endif
         </center>
     </div>
 </div>

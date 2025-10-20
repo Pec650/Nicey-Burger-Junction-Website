@@ -205,10 +205,12 @@ class OrderController extends Controller
                                ->first();
             
             if ($payment) {
+                $cancellable = now()->lessThan($payment['created_at']->addMinutes(5));
                 $branch = Branch::where('id', $payment['branch_id'])->first();
                 $branch['phone_num'] = preg_replace('/^(\d{4})(\d{3})(\d{4})$/', '$1-$2-$3', $branch['phone_num']);
                 return self::returnView('menu.placed-order')
                            ->with('payment', $payment)
+                           ->with('cancellable', $cancellable)
                            ->with('branch', $branch);
             }
         }
@@ -289,6 +291,13 @@ class OrderController extends Controller
             $payment = Payments::where('user_id', Auth::id())
                                ->where('remarks', 'Ongoing')
                                ->first();
+
+            if (now()->greaterThan($payment['created_at']->addMinutes(5))) {
+                return redirect()->route('order.ongoing')
+                                ->with('error-title', 'UNABLE TO CANCEL')
+                                ->with('error', 'Order cannot be cancelled because it alreayd reached its time limit.');;
+            }
+            
             User::where('id', Auth::id())
                 ->update(['branch_id' => $payment['branch_id']]);
             Orders::where('payment_id', $payment['id'])
@@ -300,5 +309,20 @@ class OrderController extends Controller
         }
         
         return redirect()->route('order.check');
+    }
+
+    public function complete_order($id)
+    {
+        if (Auth::check()) {
+            Payments::where('id', $id)
+                ->update(['remarks' => 'Completed']);
+            Orders::where('payment_id', $id)
+                ->update(['status' => 'Complete']);
+            User::where('id', Auth::id())
+                ->update(['branch_id' => null]);
+            session()->flash('success_msg', 'Successfully completed order! Enjoy your meal!');
+            return redirect()->route('menu');
+        }
+        abort(404);
     }
 }
