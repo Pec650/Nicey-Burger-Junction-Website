@@ -29,6 +29,10 @@
                 @if ($errors->any())
                     <p class="incorrect-error-paragraph">{{ $errors->first() }}</p>
                 @endif
+
+                <div id="forgot-password">
+                    <a href="{{ route('forgot-password.email.show') }}">Forgot Password?</a>
+                </div>
             </form>
         </div>
         <hr>

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticationController extends Controller
 {
@@ -80,6 +82,97 @@ class AuthenticationController extends Controller
         session(['branch_id' => null]);
         $request->session()->regenerate();
         return redirect()->route('index');
+    }
+
+    public function forgot_pass_email(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request['email'];
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+
+            do {
+                $code = strtoupper(Str::random(5));
+                $hashed_code = Hash::make($code);
+            } while (User::where('pass_code', $hashed_code)->first());
+
+            Mail::raw('Your code to change your password is '.$code.'.', function ($message) use ($email) {
+                $message->to($email)
+                        ->subject('Change Password');
+            });
+
+            User::where('id', $user->id)
+                ->update([
+                    'pass_code' => $hashed_code,
+                    'pass_code_exp_date' => now()->addMinutes(30),
+                ]);
+
+            session()->flash('id', $user->id);
+            return redirect()->route('forgot-password.code.show');
+        }
+        return back()->withErrors(['email' => 'Email address was not found.']);
+    }
+
+    public function forgot_pass_code(Request $request)
+    {
+        if (session('id')) {
+
+            session()->reflash();
+            $user = User::where('id', session('id'))->first();
+
+            if ($user && now()->greaterThan($user['pass_code_exp_date'])) {
+                User::where('id', session('id'))
+                    ->update([
+                        'pass_code' => null,
+                        'pass_code_exp_date' => null,
+                    ]);
+                session()->forget('id');
+                return redirect()->route('forgot-password.email.show');
+            }
+
+            if ($user && Hash::check($request['code'], $user['pass_code'])) {
+                User::where('id', session('id'))
+                    ->update([
+                        'pass_code' => null,
+                        'pass_code_exp_date' => null,
+                    ]);
+                return redirect()->route('forgot-password.change.show');
+            } else {
+                return back()->withErrors(['email' => 'Invalid Code']);
+            }
+        }
+        session()->forget('id');
+        abort(404);
+    }
+
+    public function forgot_pass_change(Request $request)
+    {
+        session()->reflash();
+
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+
+        if (session('id')) {
+            User::where('id', session('id'))
+                ->update([
+                    'password' => Hash::make($request['password']),
+                ]);
+            
+            $user = User::where('id', session('id'))->first();
+
+            session()->forget('id');
+            Auth::login($user);
+            session(['branch_id' => null]);
+            $request->session()->regenerate();
+            return redirect()->intended(route('index'));
+        }
+        session()->forget('id');
+        return abort(404);
     }
 
     public function logout(Request $request)

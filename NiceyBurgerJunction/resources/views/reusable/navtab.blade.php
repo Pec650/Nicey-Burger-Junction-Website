@@ -3,7 +3,7 @@
 
     <!-- PC NAVIGATION -->
     <div id="pcNav" style="max-width: 1200px; margin-inline: auto;">
-        <a href=""><img src="{{ asset('images/Icons/Logo.png') }}" alt="Nicey Burger Junction" class="Logo"></a>
+        <a href="{{ route('index') }}"><img src="{{ asset('images/Icons/Logo.png') }}" alt="Nicey Burger Junction" class="Logo"></a>
         <div class="nav-options">
             <button id="home-nav" onclick="window.location.href = '{{ route('home') }}'">HOME</button>
             <button id="about-nav" onclick="window.location.href = '{{ route('about') }}'">ABOUT</button>
@@ -42,7 +42,7 @@
     
     <!-- MOBILE NAVIGATION -->
     <div id="mbNav">
-        <a href=""><img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Nicey Burger Junction" class="Logo"></a>
+        <a href="{{ route('index') }}"><img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Nicey Burger Junction" class="Logo"></a>
         <button class="more-icon" id="more-icon"></button>
     </div>
 

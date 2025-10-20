@@ -57,3 +57,12 @@ Route::get('/register', [PageController::class, 'register'])->name('register.sho
 Route::post('/register', [AuthControllers::class, 'register'])->name('register');
 Route::post('/logout', [AuthControllers::class, 'logout'])->name('logout');
 /******************************************************************************************/
+
+/* FORGOT PASSWORD */
+Route::get('/forgot-password/email', [PageController::class, 'forgot_pass_email'])->name('forgot-password.email.show');
+Route::post('/forgot-password/email', [AuthControllers::class, 'forgot_pass_email'])->name('forgot-password.email.check');
+Route::get('/forgot-password/code', [PageController::class, 'forgot_pass_code'])->name('forgot-password.code.show');
+Route::post('/forgot-password/code', [AuthControllers::class, 'forgot_pass_code'])->name('forgot-password.code.check');
+Route::get('/forgot-password/change-password', [PageController::class, 'forgot_pass_change'])->name('forgot-password.change.show');
+Route::post('/forgot-password/change-password', [AuthControllers::class, 'forgot_pass_change'])->name('forgot-password.change');
+/******************************************************************************************/

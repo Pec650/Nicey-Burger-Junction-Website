@@ -1,21 +1,15 @@
 @extends('layouts.auth_layout')
-@section('title', "Sign Up")
+@section('title', "Change Password")
 @section('style')
-    @vite('resources/css/auth/register.css')
+    @vite('resources/css/auth/forgot-pass-change.css')
 @endsection
 @section('content')
 <div class="sign-up-container">
     <div class="sign-up-box">
-        <h1>REGISTER</h1>
+        <h1>CHANGE PASSWORD</h1>
         <div class="form-container">
-            <form method="POST" action="{{ route('register')  }}">
+            <form method="POST" action="{{ route('forgot-password.change')  }}">
                 @csrf
-
-                <label for="username">Username</label><br>
-                <input name="username" class="text-input" type="text" value="{{ old('username') }}">
-
-                <label for="email">Email</label><br>
-                <input name="email" class="text-input" type="text" value="{{ old('email') }}">
 
                 <label for="password">Password</label><br>
                 <div class="password-container">
@@ -37,15 +31,13 @@
                     </button>
                 </div>
 
-                <input type="submit" name="sign-up-submit" value="SIGN UP">
+                <input type="submit" name="sign-up-submit" value="UPDATE">
                 
                 @if ($errors->any())
                     <p class="incorrect-error-paragraph">{{ $errors->first() }}</p>
                 @endif
             </form>
         </div>
-        <hr>
-        <p class="more-paragraph">Already have an account? <a href="{{ route('login.show') }}">LOGIN HERE</a></p>
     </div>
 </div>
 @endsection

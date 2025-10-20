@@ -1,0 +1,41 @@
+@import url('login.css');
+
+@media all and (min-width: 1000px) {
+    .log-in-container {
+        margin-top: -110px;
+    }
+}
+
+form {
+    text-align: center;
+}
+
+#code-input {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    font-size: 50px;
+    max-width: 450px;
+    margin-bottom: 25px;
+    font-weight: 800;
+    letter-spacing: 15px;
+}
+
+form input[type="submit"] {
+    max-width: 450px;
+}
+
+@media all and (max-width: 1000px) {
+    #code-input {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+        text-align: center !important;
+        font-size: 35px !important;
+        max-width: 450px !important;
+        margin-bottom: 25px !important;
+    }
+
+    form input[type="submit"] {
+        max-width: 450px;
+    }
+}

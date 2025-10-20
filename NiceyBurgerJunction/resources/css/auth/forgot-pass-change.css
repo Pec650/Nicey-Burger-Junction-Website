@@ -1,0 +1,11 @@
+@import url('register.css');
+
+@media all and (min-width: 1000px) {
+    .sign-up-container {
+        margin-top: -100px;
+    }
+}
+
+.sign-up-box {
+    max-width: 700px;
+}

@@ -31,7 +31,7 @@ main { background-color: rgba(0, 0, 0, 0); }
     margin-top: -50px;
 }
 .log-in-box {
-    border-top: red solid 10px;
+    border-top: red solid 15px;
     margin-top: 25px;
     margin-inline: auto;
     background-color: white;
@@ -190,6 +190,22 @@ main { background-color: rgba(0, 0, 0, 0); }
     visibility: visible;
     translate: 13px -11px;
 }
+#forgot-password {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: -20px;
+    text-align: right;
+}
+#forgot-password a {
+    color: #fb9b00;
+    font-weight: 500;
+    font-size: 25px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#forgot-password a:hover {
+    color: red;
+}
 @media all and (min-width: 1000px) {
     .log-in-container {
         margin-top: -140px;
@@ -226,7 +242,7 @@ main { background-color: rgba(0, 0, 0, 0); }
         margin-top: 10px;
         scale: 0.5;
     }
-    .log-in-box .more-paragraph, .log-in-box .incorrect-error-paragraph {
+    .log-in-box .more-paragraph, .log-in-box .incorrect-error-paragraph, #forgot-password a {
         font-size: 20px;
     }
 }
