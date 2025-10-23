@@ -30,7 +30,6 @@
                     <img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Manager">
                     <h1>Manager</h1>
                     <p>Be part of Nicey Burger Junction by being a manager.</p>
-                    <button>APPLY HERE</button>
                 </center>
             </div>
             <div>
@@ -38,10 +37,26 @@
                     <img src="{{ asset('images/Icons/LogoIcon.png') }}" alt="Manager">
                     <h1>Cashier</h1>
                     <p>Be part of Nicey Burger Junction by being a cashier.</p>
-                    <button>APPLY HERE</button>
                 </center>
             </div>
         </span>
+    </div>
+
+    <hr>
+
+    <h1>CONTACT US</h1>
+
+    <div class="contact-container">
+        <div class="contact-info-container">
+            <span>
+                <img src="{{ asset('images/Icons/PhoneIcon.png') }}" width="50px" height="50px">
+                <h3>NiceyBJ@mail.com</h3>
+            </span>
+            <span>
+                <img src="{{ asset('images/Icons/EmailIcon.png') }}" width="50px" height="50px">
+                <h3>0912-345-6789</h3>
+            </span>
+        </div>
     </div>
     
 </div>

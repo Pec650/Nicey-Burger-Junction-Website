@@ -129,25 +129,21 @@ main {
     color: white;
     text-wrap: word-break;
 }
-.career-options div button {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 750;
-    font-size: 18px;
-    padding: 13px 20px;
-    background-color: red;
-    color: white;
-    border: red solid 5px;
-    margin-top: 16px;
-    margin-bottom: 45px;
-    border-radius: 50px;
-    cursor: pointer;
+.contact-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
 }
-.career-content div button:hover {
-    background-color: white;
-    color: red;
+.contact-info-container h3 {
+    font-weight: 800;
+    color: #f9a833ff;
+    margin-top: 10px;
+    cursor: default;
 }
-.career-content div button:active {
-    scale: 0.9;
+@media all and (min-width: 1400px) {
+    .contact-info-container h3:hover {
+        text-decoration: underline;
+    }
 }
 @media all and (max-width: 1400px) {
     .career-hero {
