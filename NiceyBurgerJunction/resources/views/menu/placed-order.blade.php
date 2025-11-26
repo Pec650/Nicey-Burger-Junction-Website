@@ -26,24 +26,42 @@
     <div id="PC-complete">
         <center class="place-order-buttons">
             @if ($cancellable)
-                <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
+                <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
             @else
                 <button class="uncancellable">CANCEL</button>
             @endif
-            <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button>
+            {{-- <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button> --}}
         </center>
     </div>
     <div id="MB-complete">
         <center class="place-order-buttons">
-            <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button>
+            {{-- <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button> --}}
             @if ($cancellable)
-                <button id="cancel" value="{{ route('order.cancel') }}">CANCEL</button>
+                <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
             @else
                 <button class="uncancellable">CANCEL</button>
             @endif
         </center>
     </div>
 </div>
+
+<div id="cancelModal" class="modal-bg" style="display:none;">
+    <div class="modal-box">
+        <h2>Cancel Order</h2>
+        <p>Please provide a reason for cancelling your order:</p>
+
+        <form id="cancelForm" method="POST" action="{{ route('order.cancel') }}">
+            @csrf
+            <textarea name="reason" id="cancelReason" placeholder="Type your reason..." required></textarea>
+
+            <div class="modal-actions">
+                <button type="button" id="cancelClose">Close</button>
+                <button type="submit" id="cancelSubmit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @endsection
 @section('script')
     @vite(['resources/js/placed-order.js'])
