@@ -285,7 +285,7 @@ class OrderController extends Controller
         return abort(404);
     }
 
-    public function cancel_order()
+    public function cancel_order(Request $request)
     {
         if (Auth::check()) {
             $payment = Payments::where('user_id', Auth::id())
@@ -298,8 +298,15 @@ class OrderController extends Controller
                                 ->with('error', 'Order cannot be cancelled because it alreayd reached its time limit.');;
             }
             
+            if($request->reason) {
+                $payment->update([
+                    'cancel_reason' => $request->reason
+                ]);
+            }
+
             User::where('id', Auth::id())
                 ->update(['branch_id' => $payment['branch_id']]);
+
             Orders::where('payment_id', $payment['id'])
                   ->update([
                     'status' => 'Pending',

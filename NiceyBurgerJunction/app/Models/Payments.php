@@ -15,5 +15,6 @@ class Payments extends Model
         'total_quantity',
         'remarks',
         'branch_id',
+        'cancel_reason'
     ];
 }
