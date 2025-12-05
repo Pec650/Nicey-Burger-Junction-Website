@@ -66,3 +66,5 @@ Route::post('/forgot-password/code', [AuthControllers::class, 'forgot_pass_code'
 Route::get('/forgot-password/change-password', [PageController::class, 'forgot_pass_change'])->name('forgot-password.change.show');
 Route::post('/forgot-password/change-password', [AuthControllers::class, 'forgot_pass_change'])->name('forgot-password.change');
 /******************************************************************************************/
+
+Route::post('/orders/received/{id}', [OrderController::class, 'customer_received'])->name('order.received');

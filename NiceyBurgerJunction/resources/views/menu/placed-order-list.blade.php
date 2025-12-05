@@ -10,7 +10,7 @@
     </div>
     <center><h1 id="order-list-header">YOUR ORDER</h1></center>
     <div id="item-container">
-        @foreach ($orders->get() as $order)
+        @foreach ($orders as $order)
             <!-- Order Items -->
             <div class="order-item">
                 @if ($order['product_image'] != null and file_exists("images/Menu/".$order['product_image']))

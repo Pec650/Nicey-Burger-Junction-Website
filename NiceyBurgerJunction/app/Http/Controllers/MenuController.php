@@ -59,6 +59,7 @@ class MenuController extends Controller
 
     public function menu($type)
     {
+        // ... (Keep your Auth checks here) ...
         if (Auth::check() && Auth::user()->branch_id == null) {
             return redirect()->route('menu.branch');
         }
@@ -70,13 +71,22 @@ class MenuController extends Controller
         $branch = Branch::where('id', $branch_id)->first();
 
         $type = Str::title(str_replace('-', ' ', $type));
-        $products = Products::where('type', $type)->get();
-        if ($products->count() > 0) {
-            return self::returnView('home.menu')
+        $products = Products::where('type', $type)
+                    ->where('branch_id', $branch_id)
+                    ->where('quantity', '!=', 0)
+                    ->get();
+        
+        $unavailableProducts = Products::where('type', $type)
+                                ->where('branch_id', $branch_id)
+                                ->where('quantity', '==', 0)
+                                ->get();
+
+        // FIX: Always return the view, even if products count is 0.
+        // Let the blade file handle the "empty" state.
+        return self::returnView('home.menu')
                 ->with('type', $type)
                 ->with('products', $products)
+                ->with('unavailable', $unavailableProducts)
                 ->with('branch', $branch);
-        }
-        return redirect()->route('menu');
     }
 }

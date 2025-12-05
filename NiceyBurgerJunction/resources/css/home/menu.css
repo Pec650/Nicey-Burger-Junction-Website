@@ -143,6 +143,23 @@ main {
     color: #f9a833ff;
     background-color: white;
 }
+.unavailable-items {
+
+    img {
+        filter: grayscale(100%);
+    }
+
+    .itemButton {
+        cursor: default;
+        border-color: grey;
+        background-color: grey;
+
+        &:hover {
+            color: white;
+            background-color: grey;
+        }
+    }
+}
 @media all and (min-width: 1400px) {
     #itemContainer {
         grid-template-columns: repeat(3, 1fr);

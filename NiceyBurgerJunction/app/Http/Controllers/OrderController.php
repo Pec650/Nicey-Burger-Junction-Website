@@ -10,6 +10,7 @@ use App\Models\Products;
 use App\Models\Orders;
 use App\Models\Branch;
 use App\Models\Payments;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -17,15 +18,17 @@ class OrderController extends Controller
     {
         if (!Auth::check()) return abort(404);
 
+        // Check for ANY active order status
         $ongoing_orders = Orders::where('user_id', Auth::id())
-                                ->where('status', 'Ongoing')
+                                ->whereIn('status', ['Ongoing', 'Preparing', 'Ready for Pickup'])
                                 ->get();
                                     
         if ($ongoing_orders->count() > 0) {
             return redirect()->route('order.ongoing');
         }
 
-        $orders = Orders::join('products', 'product_id', '=', 'products.id')
+        // FIXED: Join products and removed ->get() to let Blade handle it
+        $orders = Orders::join('products', 'orders.product_id', '=', 'products.id')
                         ->select(
                             'orders.*',
                             'orders.id as order_id',
@@ -33,13 +36,17 @@ class OrderController extends Controller
                             'products.name as product_name',
                             'products.price as product_price',
                             'products.type as product_type',
-                            'products.img_dir as product_image',
+                            'products.img_dir as product_image', 
                         )->where('user_id', Auth::id())
-                        ->where('status', 'Pending');
+                        ->where('status', 'Pending')
+                        ->get();
+
         $branch = Branch::where('id', Auth::user()->branch_id)->first();
+        
         $total = Orders::where('user_id', Auth::id())
                         ->where('status', 'Pending')
                         ->sum('total_price');
+
         return self::returnView('menu.order')
                    ->with('orders', $orders)
                    ->with('branch', $branch)
@@ -48,14 +55,14 @@ class OrderController extends Controller
 
     public function order_product_show($id)
     {
-        if (session('id') && session('id') == $id) {
-            session()->reflash();
-            $product = Products::where('id', $id)->first();
-            if ($product) {
-                return self::returnView('menu.order-product')->with('product', $product);
-            }
+        $product = Products::where('id', $id)->first();
+
+        if (!$product) {
+            return redirect()->route('menu');
         }
-        return abort(404);
+
+        return self::returnView('menu.order-product')
+            ->with('product', $product);
     }
 
     public function order_product($id)
@@ -71,7 +78,7 @@ class OrderController extends Controller
             if (Orders::hasOngoingOrders()) {
                 return redirect()->route('menu.type', ['type' => Str::slug($data['product-type'])])
                                  ->with('error-title', 'ONGOING ORDER')
-                                 ->with('error', 'Could place order, you currently have ongoing order.');
+                                 ->with('error', 'Could not place order, you currently have an ongoing order.');
             }
 
             $existing_order = Orders::where('product_id', $data['product-id'])
@@ -79,13 +86,11 @@ class OrderController extends Controller
                                     ->where('status', 'Pending');
 
             if ($existing_order->count() > 0) {
-                // UPDATE EXISTING ORDER WITH STATUS 'PENDING'
                 $existing_order->increment('quantity', $data['quantity']);
             } else {
-                // CREATE A NEW ORDER
                 Orders::create([
                     'user_id' => Auth::id(),
-                    'product_id' => $data['product-id'],
+                    'product_id' => $data['product-id'], 
                     'quantity' => $data['quantity'],
                     'total_price' => $data['product-price'] * $data['quantity'],
                     'request' => $data['request'],
@@ -102,7 +107,8 @@ class OrderController extends Controller
     {
         if (Auth::check() && session('id') && session('id') == $id) {
             session()->reflash();
-            $order = Orders::join('products', 'product_id', '=', 'products.id')
+            
+            $order = Orders::join('products', 'orders.product_id', '=', 'products.id')
                             ->select(
                                 'orders.*',
                                 'orders.id as order_id',
@@ -112,6 +118,7 @@ class OrderController extends Controller
                                 'products.type as product_type',
                                 'products.img_dir as product_image',
                             )->where('orders.id', $id)->first();
+
             if ($order) {
                 return self::returnView('menu.order-edit')
                            ->with('order', $order);
@@ -200,28 +207,55 @@ class OrderController extends Controller
     public function ongoing_order()
     {
         if (Auth::check()) {
+            // 1. Check for TRULY active orders first
             $payment = Payments::where('user_id', Auth::id())
-                               ->where('remarks', 'Ongoing')
+                               ->whereIn('remarks', ['Ongoing', 'Preparing', 'Ready for Pickup', 'Waiting for Confirmation'])
                                ->first();
             
             if ($payment) {
-                $cancellable = now()->lessThan($payment['created_at']->addMinutes(5));
+                // ... (Existing logic for active orders) ... (15 Minutes Before Uncancellable)
+                $cancellable = now()->lessThan($payment['created_at']->addMinutes(15));
+                if ($payment['remarks'] !== 'Ongoing') {
+                    $cancellable = false;
+                }
+
                 $branch = Branch::where('id', $payment['branch_id'])->first();
                 $branch['phone_num'] = preg_replace('/^(\d{4})(\d{3})(\d{4})$/', '$1-$2-$3', $branch['phone_num']);
+                
                 return self::returnView('menu.placed-order')
                            ->with('payment', $payment)
                            ->with('cancellable', $cancellable)
                            ->with('branch', $branch);
             }
+
+            // 2. NEW LOGIC: Check if we have a RECENTLY COMPLETED order (e.g., in the last 10 minutes)
+            // This prevents the 404 crash if the kitchen just finished it.
+            $recent_completed = Payments::where('user_id', Auth::id())
+                                        ->where('remarks', 'Completed')
+                                        ->orderBy('updated_at', 'desc') // Get the latest one
+                                        ->first();
+
+            // If we find a recently completed order (and no active ones), redirect them gracefully
+            if ($recent_completed) {
+                // Optional: Check if it was completed very recently (e.g. within 1 hour)
+                // If you want to show a "Thank You" page, you can return a view here instead.
+                
+                return redirect()->route('menu')
+                                 ->with('success_msg', 'Your order is complete! Thank you for dining with Nicey Burger.');
+            }
         }
-        return abort(404);
+        
+        // 3. Only abort if they truly have NO history and NO active order
+        // Or better yet, just redirect to Menu instead of showing an error page.
+        return redirect()->route('menu'); 
     }
 
     public function order_map()
     {
         if (Auth::check()) {
+            // FIXED: Look for ANY active status
             $payment = Payments::where('user_id', Auth::id())
-                               ->where('remarks', 'Ongoing')
+                               ->whereIn('remarks', ['Ongoing', 'Preparing', 'Ready for Pickup'])
                                ->first();
             
             if ($payment) {
@@ -235,12 +269,15 @@ class OrderController extends Controller
     public function order_list()
     {
         if (Auth::check()) {
+            // FIXED: Look for ANY active status
             $payment = Payments::where('user_id', Auth::id())
-                               ->where('remarks', 'Ongoing')
+                               ->whereIn('remarks', ['Ongoing', 'Preparing', 'Ready for Pickup'])
                                ->first();
             
             if ($payment) {
-                $orders = Orders::join('products', 'product_id', '=', 'products.id')
+                // FIXED: Join products and added ->get() 
+                // (Assuming this view expects a collection, not a query builder)
+                $orders = Orders::join('products', 'orders.product_id', '=', 'products.id')
                                 ->select(
                                     'orders.*',
                                     'orders.id as order_id',
@@ -249,7 +286,9 @@ class OrderController extends Controller
                                     'products.price as product_price',
                                     'products.type as product_type',
                                     'products.img_dir as product_image',
-                                )->where('payment_id', $payment['id']);
+                                )->where('payment_id', $payment['id'])
+                                ->get(); 
+
                 return self::returnView('menu.placed-order-list')->with('orders', $orders);
             }
         }
@@ -268,7 +307,8 @@ class OrderController extends Controller
     {
         if (Auth::check() && session('id')) {
             session()->reflash();
-            $order = Orders::join('products', 'product_id', '=', 'products.id')
+            
+            $order = Orders::join('products', 'orders.product_id', '=', 'products.id')
                             ->select(
                                 'orders.*',
                                 'orders.id as order_id',
@@ -292,10 +332,15 @@ class OrderController extends Controller
                                ->where('remarks', 'Ongoing')
                                ->first();
 
+            // Safety check: if payment is gone (became Preparing), stop here
+            if (!$payment) {
+                return redirect()->route('order.ongoing');
+            }
+
             if (now()->greaterThan($payment['created_at']->addMinutes(5))) {
                 return redirect()->route('order.ongoing')
                                 ->with('error-title', 'UNABLE TO CANCEL')
-                                ->with('error', 'Order cannot be cancelled because it alreayd reached its time limit.');;
+                                ->with('error', 'Order cannot be cancelled because it already reached its time limit.');
             }
             
             if($request->reason) {
@@ -331,5 +376,28 @@ class OrderController extends Controller
             return redirect()->route('menu');
         }
         abort(404);
+    }
+
+    public function customer_received($id)
+    {
+        if (Auth::check()) {
+            
+            // Force status update
+            DB::table('payment')
+                ->where('id', $id)
+                ->update(['remarks' => 'Completed']);
+
+            DB::table('orders')
+                ->where('payment_id', $id)
+                ->update(['status' => 'Complete']);
+
+            // Free the user
+            User::where('id', Auth::id())->update(['branch_id' => null]);
+            
+            session()->flash('success_msg', 'Thank you! Please wait for the cashier to close your transaction.');
+            
+            return redirect()->route('menu');
+        }
+        return abort(404);
     }
 }

@@ -9,6 +9,23 @@
     <center><h2 id="order-header">ORDER NUMBER</h2></center>
     <center><h1 id="order-number">{{ $payment['id'] }}</h1></center>
 
+    {{-- START: NEW STATUS DISPLAY BLOCK --}}
+    <div class="status-display" style="text-align: center; margin: 20px 0; padding: 15px; border-radius: 10px; background-color: #f9f9f9;">
+        @if($payment['remarks'] == 'Ongoing')
+            <h2 style="color: #666; font-weight: 800; margin: 0;">⏳ ORDER PLACED</h2>
+            <p style="margin: 5px 0 0 0;">Waiting for kitchen confirmation...</p>
+        
+        @elseif($payment['remarks'] == 'Preparing')
+            <h2 style="color: #e67e22; font-weight: 800; margin: 0;">🔥 PREPARING</h2>
+            <p style="margin: 5px 0 0 0;">Our chefs are cooking your meal!</p>
+            
+        @elseif($payment['remarks'] == 'Ready for Pickup')
+            <h2 style="color: #27ae60; font-weight: 800; margin: 0;">✅ READY FOR PICKUP</h2>
+            <p style="margin: 5px 0 0 0;">Please proceed to the counter.</p>
+        @endif
+    </div>
+    {{-- END: NEW STATUS DISPLAY BLOCK --}}
+
     <center><h2 id="branchH">{{ $branch['branch_name'] }}</h2></center>
     <center><h4 id="addH">{{ $branch['barangay'] }}, {{ $branch['city'] }}</h4></center>
 
@@ -25,22 +42,45 @@
 
     <div id="PC-complete">
         <center class="place-order-buttons">
-            @if ($cancellable)
-                <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
-            @else
-                <button class="uncancellable">CANCEL</button>
+            {{-- Logic: Only show cancel options if the order is NOT cooking yet --}}
+            @if($payment['remarks'] == 'Ongoing' || $payment['remarks'] == 'Preparing')
+                @if ($cancellable)
+                    <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
+                @else
+                    <button class="uncancellable">CANCEL</button>
+                @endif
             @endif
-            {{-- <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button> --}}
+            
+            {{-- Optional: Show a "Finish" button if ready, or just let them pick it up --}}
+            @if($payment['remarks'] == 'Ready for Pickup')
+                {{-- FIXED: Use a Form to trigger the update function, not a simple redirect --}}
+                <form action="{{ route('order.received', $payment['id']) }}" method="POST" style="width: 100%">
+                    @csrf
+                    <button type="submit" class="recievedOrderButton">
+                        👍 I RECEIVED MY ORDER
+                    </button>
+                </form>
+            @endif
         </center>
     </div>
     <div id="MB-complete">
         <center class="place-order-buttons">
-            {{-- <button id="complete" value="{{ route('order.complete', ['id' => $payment['id']]) }}">COMPLETE</button> --}}
-            @if ($cancellable)
-                <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
-            @else
-                <button class="uncancellable">CANCEL</button>
+            @if($payment['remarks'] == 'Ongoing')
+                @if ($cancellable)
+                    <button class="cancel-btn" value="{{ route('order.cancel') }}">CANCEL</button>
+                @else
+                    <button class="uncancellable">CANCEL</button>
+                @endif
             @endif
+
+            @if($payment['remarks'] == 'Ready for Pickup')
+    <form action="{{ route('order.received', $payment['id']) }}" method="POST">
+        @csrf
+        <button type="submit" style="background-color: #27ae60; color: white; padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px;">
+            👍 I RECEIVED MY ORDER
+        </button>
+    </form>
+@endif
         </center>
     </div>
 </div>
@@ -63,6 +103,12 @@
 </div>
 
 @endsection
+
 @section('script')
     @vite(['resources/js/placed-order.js'])
+    
+    <script>
+        // AUTO-REFRESH SCRIPT
+        // Checks for updates every 10 seconds so the customer sees when status changes
+    </script>
 @endsection

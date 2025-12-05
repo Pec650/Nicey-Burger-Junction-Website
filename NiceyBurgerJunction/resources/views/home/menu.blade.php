@@ -67,6 +67,20 @@
             </div>
             @endforeach
             @endif
+            @if ($unavailable)
+            @foreach ($unavailable as $p)
+            <div class="item unavailable-items">
+                @if ($p['img_dir'] != null and file_exists("images/Menu/".$p['img_dir']))
+                    <img src="{{ asset("images/Menu/".$p['img_dir']) }}" alt="{{ $p['name'] }}">
+                @else
+                    <img src="{{ asset('images/Icons/TemporaryImage.png') }}" alt="{{ $p['name'] }}">
+                @endif
+                <div class="name">{{ Str::limit($p['name'], 20) }}</div>
+                <div class="price">₱ {{ number_format((float) $p['price'], 2) }}</div>
+                <button class="itemButton">UNAVAILABLE</button>
+            </div>
+            @endforeach
+            @endif
         </div>
     </div>
 </div>

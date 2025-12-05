@@ -14,7 +14,7 @@
 
     @if ($orders->count() > 0)
         <div id="item-container">
-            @foreach ($orders->get() as $order)
+            @foreach ($orders as $order)
                 <!-- Order Items -->
                 <div class="order-item">
                     @if ($order['product_image'] != null and file_exists("images/Menu/".$order['product_image']))
