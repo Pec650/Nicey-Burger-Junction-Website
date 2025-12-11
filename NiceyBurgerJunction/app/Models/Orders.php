@@ -44,9 +44,17 @@ class Orders extends Model
     public static function removePendingOrders()
     {
         if (Auth::check()) {
-            self::where('user_id', Auth::id())
-                ->where('status', 'Pending')
-                ->delete();
+            $deleted_orders = self::where('user_id', Auth::id())
+                                    ->where('status', 'Pending')
+                                    ->get();
+            
+            foreach($deleted_orders as $order) {
+                Products::where('id', $order->product_id)
+                        ->increment('quantity', $order->quantity);
+
+                $order->delete();
+            }
+
             DB::statement("ALTER TABLE orders AUTO_INCREMENT = 1");
         }
     }

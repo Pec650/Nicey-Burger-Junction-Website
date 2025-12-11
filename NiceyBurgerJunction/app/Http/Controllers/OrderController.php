@@ -96,6 +96,11 @@ class OrderController extends Controller
                     'request' => $data['request'],
                 ]);
             }
+            
+            Products::where('id', $data['product-id'])
+                    ->where('quantity', '>=', $data['quantity'])
+                    ->decrement('quantity', $data['quantity']);
+            
 
             session()->flash('success_msg', 'Successfully added item to your order!');
         }
@@ -154,9 +159,15 @@ class OrderController extends Controller
     public function delete_order($id)
     {
         if (Auth::check()) {
-            Orders::where('id', $id)
-                  ->where('status', 'Pending')
-                  ->delete();
+            $delete_order = Orders::where('id', $id)
+                                    ->where('status', 'Pending')
+                                    ->first();
+            if ($delete_order) {
+                Products::where('id', $delete_order->product_id)
+                        ->increment('quantity', $delete_order->quantity);
+
+                $delete_order->delete();
+            }
             session()->flash('success_msg', 'Successfully removed item.');
             return redirect()->route('order.check');
         }
